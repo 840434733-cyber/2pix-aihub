@@ -18,12 +18,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       select: { id: true, publishedAt: true }
     })
   } catch {
-    // 鏋勫缓鏃舵暟鎹簱涓嶅彲鐢紝鍏堣繑鍥為潤鎬侀〉闈?    console.warn('sitemap: database unavailable during build, using static pages only')
+    // 构建时数据库不可用，先返回静态页面
+    console.warn('sitemap: database unavailable during build, using static pages only')
   }
 
   try { await prisma.$disconnect() } catch {}
 
-  // 闈欐€侀〉闈?  const staticPages = [
+  // 静态页面
+  const staticPages = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 1.0 },
     { url: `${baseUrl}/tools`, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 0.9 },
     { url: `${baseUrl}/news`, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 0.8 },
@@ -35,14 +37,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/login`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.3 },
   ]
 
-  // 宸ュ叿璇︽儏椤?  const toolPages = tools.map(tool => ({
+  // 工具详情页
+  const toolPages = tools.map(tool => ({
     url: `${baseUrl}/tools/${tool.slug}`,
     lastModified: tool.updatedAt,
     changeFrequency: 'weekly' as const,
     priority: 0.8
   }))
 
-  // 璧勮璇︽儏椤?  const newsPages = news.map(article => ({
+  // 资讯详情页
+  const newsPages = news.map(article => ({
     url: `${baseUrl}/news/${article.id}`,
     lastModified: article.publishedAt || new Date(),
     changeFrequency: 'monthly' as const,
