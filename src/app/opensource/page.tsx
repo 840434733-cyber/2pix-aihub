@@ -5,6 +5,8 @@ import Footer from '@/components/Footer'
 import { prisma } from '@/lib/prisma'
 import OpenSourceFilter from '@/components/OpenSourceFilter'
 
+export const dynamic = "force-dynamic"
+
 interface OpenSourcePageProps {
   searchParams: { [key: string]: string | string[] | undefined }
 }

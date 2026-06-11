@@ -8,6 +8,8 @@ import { formatDate } from '@/lib/utils'
 import SubscribeCard from '@/components/SubscribeCard'
 import type { Metadata } from 'next'
 
+export const dynamic = "force-dynamic"
+
 export const revalidate = 1800
 
 
@@ -16,6 +18,31 @@ interface NewsDetailPageProps {
 }
 
 export async function generateMetadata({ params }: NewsDetailPageProps): Promise<Metadata> {
+  const newsId = parseInt(params.id, 10)
+  if (isNaN(newsId)) return { title: "资讯未找到 | 2Pix" }
+  let title = ""
+  let summary = ""
+  try {
+    const news = await prisma.news.findUnique({
+      where: { id: newsId },
+      select: { title: true, titleZh: true, summary: true }
+    })
+    if (news) {
+      title = news.titleZh || news.title
+      summary = news.summary || ""
+    }
+  } catch {
+    console.warn("generateMetadata (news): database unavailable during build")
+  } finally {
+    try { await prisma.$disconnect() } catch {}
+  }
+  if (!title) return { title: "资讯未找到 | 2Pix" }
+  return {
+    title: `${title} - AI资讯 | 2Pix`,
+    description: summary || `了解最新AI资讯：${title}`,
+  }
+}
+: NewsDetailPageProps): Promise<Metadata> {
   const newsId = parseInt(params.id, 10)
   if (isNaN(newsId)) return { title: '资讯未找到 | 2Pix' }
   

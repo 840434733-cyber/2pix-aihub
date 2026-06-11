@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { 
+
+export const dynamic = "force-dynamic"
   TrendingUp, Heart, MessageCircle, Eye, Users,
   ArrowUp, ArrowDown, Minus, Flame,
   Code, Sparkles, Wrench, HelpCircle, Crown

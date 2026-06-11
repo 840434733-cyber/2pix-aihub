@@ -14,6 +14,8 @@ import { prisma } from '@/lib/prisma'
 import { formatNumber, formatDate } from '@/lib/utils'
 import type { Metadata } from 'next'
 
+export const dynamic = "force-dynamic"
+
 export const revalidate = 1800
 
 interface ToolPageProps {
@@ -21,6 +23,29 @@ interface ToolPageProps {
 }
 
 export async function generateMetadata({ params }: ToolPageProps): Promise<Metadata> {
+  let toolName = ""
+  let toolDesc = ""
+  try {
+    const tool = await prisma.tool.findUnique({
+      where: { slug: params.slug },
+      select: { name: true, shortDesc: true, description: true }
+    })
+    if (tool) {
+      toolName = tool.name
+      toolDesc = tool.shortDesc || tool.description || ""
+    }
+  } catch {
+    console.warn(`generateMetadata (tool/${params.slug}): database unavailable during build`)
+  } finally {
+    try { await prisma.$disconnect() } catch {}
+  }
+  if (!toolName) return { title: `工具详情 | 2Pix` }
+  return {
+    title: `${toolName} - AI工具详情 | 2Pix`,
+    description: toolDesc || `了解AI工具 ${toolName} 的详细信息、功能特点和用户评价。`,
+  }
+}
+: ToolPageProps): Promise<Metadata> {
   const tool = await prisma.tool.findUnique({
     where: { slug: params.slug },
     select: { name: true, shortDesc: true, description: true }

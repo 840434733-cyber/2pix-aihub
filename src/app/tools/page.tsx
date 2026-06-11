@@ -8,6 +8,8 @@ import ToolsSearchBar from '@/components/ToolsSearchBar'
 import { Suspense } from 'react'
 import { Terminal, Cpu, ChevronLeft, ChevronRight } from 'lucide-react'
 
+export const dynamic = "force-dynamic"
+
 const ITEMS_PER_PAGE = 12
 
 export const metadata = {

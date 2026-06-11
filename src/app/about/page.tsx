@@ -5,6 +5,8 @@ import Footer from '@/components/Footer'
 import ContactButton from '@/components/ContactButton'
 import { prisma } from '@/lib/prisma'
 
+export const dynamic = "force-dynamic"
+
 export const revalidate = 1800
 
 export const metadata = {

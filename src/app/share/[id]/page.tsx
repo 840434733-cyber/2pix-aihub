@@ -8,6 +8,8 @@ import { getShareImages } from '@/lib/share-image'
 import ShareDetailClient from './ShareDetailClient'
 import type { Metadata } from 'next'
 
+export const dynamic = "force-dynamic"
+
 export const revalidate = 1800
 
 interface Props {
@@ -15,6 +17,23 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  let found = false
+  try {
+    const share = await prisma.share.findUnique({
+      where: { id: parseInt(params.id) },
+      select: { content: true },
+    })
+    found = !!share
+  } catch {
+    console.warn("generateMetadata (share): database unavailable during build")
+  } finally {
+    try { await prisma.$disconnect() } catch {}
+  }
+  return {
+    title: found ? "分享详情 | 2Pix" : "分享不存在 | 2Pix",
+  }
+}
+: Props): Promise<Metadata> {
   const share = await prisma.share.findUnique({
     where: { id: parseInt(params.id) },
     select: { content: true },

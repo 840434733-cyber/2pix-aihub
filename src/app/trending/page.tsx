@@ -5,6 +5,8 @@ import Footer from '@/components/Footer'
 import TrendingToolCard from '@/components/TrendingToolCard'
 import { TrendingUp, Flame, Clock, Star, Trophy } from 'lucide-react'
 
+export const dynamic = "force-dynamic"
+
 export const metadata = {
   title: 'AI工具趋势榜 | 2Pix',
   description: '查看最热门的AI工具排名，基于用户互动和热度指数实时更新，发现大家都在用的AI工具。',

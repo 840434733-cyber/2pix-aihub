@@ -29,6 +29,8 @@ import {
 } from 'lucide-react'
 import { getShareImages } from '@/lib/share-image'
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: '社区分享 | 2Pix',
   description: 'AI工具用户社区，分享你的AI工具使用心得、技巧和经验，与AI爱好者交流互动。',
