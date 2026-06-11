@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowLeft, ExternalLink, Github, Star, Heart, Flag } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Github, Star } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
