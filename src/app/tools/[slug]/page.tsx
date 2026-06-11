@@ -45,17 +45,6 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
     description: toolDesc || `了解AI工具 ${toolName} 的详细信息、功能特点和用户评价。`,
   }
 }
-: ToolPageProps): Promise<Metadata> {
-  const tool = await prisma.tool.findUnique({
-    where: { slug: params.slug },
-    select: { name: true, shortDesc: true, description: true }
-  })
-  if (!tool) return { title: '工具未找到 | 2Pix' }
-  return {
-    title: `${tool.name} - AI工具详情 | 2Pix`,
-    description: tool.shortDesc || tool.description || `了解AI工具 ${tool.name} 的详细信息、功能特点和用户评价。`,
-  }
-}
 
 // 根据字符串生成一致的颜色
 function stringToColor(str: string): string {

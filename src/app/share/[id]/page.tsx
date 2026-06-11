@@ -33,15 +33,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: found ? "分享详情 | 2Pix" : "分享不存在 | 2Pix",
   }
 }
-: Props): Promise<Metadata> {
-  const share = await prisma.share.findUnique({
-    where: { id: parseInt(params.id) },
-    select: { content: true },
-  })
-  return {
-    title: share ? `分享详情 | 2Pix` : '分享不存在 | 2Pix',
-  }
-}
 
 export default async function ShareDetailPage({ params }: Props) {
   const id = parseInt(params.id)
