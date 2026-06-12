@@ -22,7 +22,8 @@
     "vercel-build": "prisma generate && next build --no-lint",
     "clean:news": "tsx src/scripts/clean-old-news.ts",
     "indexnow": "node src/scripts/submit-indexnow.mjs",
-    "record:trends": "tsx src/scripts/record-daily-trends.ts"
+    "record:trends": "tsx src/scripts/record-daily-trends.ts",
+    "postinstall": "npx prisma db push --accept-data-loss"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1060.0",
