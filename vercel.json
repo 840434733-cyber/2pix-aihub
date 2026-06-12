@@ -3,5 +3,11 @@
     "env": {
       "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD": "true"
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/crawl",
+      "schedule": "0 */6 * * *"
+    }
+  ]
 }
